@@ -1,0 +1,11 @@
+name: "command-ops"
+author: "novacbn"
+version: "0.1.0"
+repository: "github://novacbn/command-ops"
+
+projectBuilds: 
+	"novacbn/command-ops/exports": "command-ops"
+
+Packager: {
+	targetPlatform: "lua"
+}
