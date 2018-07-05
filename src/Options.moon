@@ -56,6 +56,7 @@ makeOptionType = (typeName, defaultValue, transform) ->
             error("bad argument #1 to '#{typeName}' (duplicate mini CLI flag)") if option.flagMini == flagMini
 
         @options[name] = {
+            name:           name
             description:    description
             default:        default
             validate:       validate
@@ -106,13 +107,15 @@ export Options = () -> {
             value   = flags[option.flagFull] if value == nil
             value   = getenv(formatEnvFull(binary, name)) if value == nil
 
+            if value == nil then return
+
             if option.transform
                 value = option.transform(value)
-                return "bad option to '#{flag.name}' (malformed value)" if value == nil
+                return "bad option to '#{option.name}' (malformed value)" if value == nil
 
             if option.validate
                 err = option.validate(value)
-                return "bad option to '#{flag.name}' (#{err})" unless err
+                return "bad option to '#{option.name}' (#{err})" unless err
 
             option.value = value
 
